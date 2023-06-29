@@ -1,19 +1,16 @@
-import useSWR from "swr";
 import Image from "next/image";
-
-const fetcher = async () => {
-    const response = await fetch("https://randomuser.me/api/?results=6");
-    const data = await response.json();
-    return data;
-};
+import { useFetch } from "@/hooks/useFetch";
 
 export default function RandomUsers() {
-    const { data, error, isLoading } = useSWR("users", fetcher, {
-        refreshInterval: 10,
-    });
+    const { data, error, isLoading } = useFetch(
+        "https://randomuser.me/api/?results=6",
+        {
+            refreshInterval: 30,
+        }
+    );
 
     if (error) return <p>Erro na requisição...</p>;
-    if (isLoading && !data) return <p>Carregando...</p>;
+    if (isLoading) return <p>Carregando...</p>;
 
     return (
         <div>

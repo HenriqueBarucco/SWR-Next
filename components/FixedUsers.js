@@ -1,25 +1,16 @@
 import { useFetch } from "@/hooks/useFetch";
 
-/* const fetcher = async () => {
-    const response = await fetch("http://localhost:1111/teste");
-    const data = await response.json();
-    return data;
-}; */
-
 export default function FixedUsers() {
-    const { data } = useFetch("http://localhost:1111/teste");
-
-    /* const { data, error, isLoading, isValidating } = useSWR("users", fetcher, {
+    const { data, error, isLoading } = useFetch("http://localhost:3333/users", {
         refreshInterval: 10,
         keepPreviousData: true,
-    }); */
+    });
 
-    //if (error) return <p>Erro na requisição...</p>;
-    if (!data) return <p>Carregando...</p>;
+    if (isLoading) return <p>Carregando...</p>;
+    if (error) return <p>Erro na requisição...</p>;
 
     return (
         <div>
-            {/* {isValidating ? <h3>Revalidando...</h3> : <h3>...</h3>} */}
             <div className="flex flex-col justify-center align-middle">
                 {data &&
                     data.map((item) => (
